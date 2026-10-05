@@ -1,16 +1,16 @@
 /* Service worker de El Horno.
    Guarda la app en el dispositivo para que abra sin conexión.
    Cuando publiques una versión nueva, subí el número de VERSION. */
-var VERSION = 'v1';
+var VERSION = 'v2';
 var CACHE = 'el-horno-' + VERSION;
 var ARCHIVOS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-maskable-512.png',
-  './apple-touch-icon.png'
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-maskable-512.png',
+  './icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', function (e) {
