@@ -7,8 +7,8 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F5F6F8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0F1115" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/png" href="icon-192.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="El Horno">
@@ -133,12 +133,47 @@ textarea{resize:vertical;min-height:88px;line-height:1.4}
 .err{color:var(--hot);font-size:13px;min-height:20px;margin:-8px 0 8px}
 .actions{display:grid;gap:10px;margin-top:8px}
 @media (min-width:640px){.actions{grid-template-columns:1fr 1fr}.field{max-width:520px}.actions{max-width:520px}}
+
+#splash{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .45s ease,visibility .45s;cursor:pointer}
+#splash.out{opacity:0;visibility:hidden}
+#splash svg{width:104px;height:104px;overflow:visible}
+#splash .fl{transform-box:fill-box;transform-origin:50% 100%}
+#splash .fo{fill:var(--hot);opacity:0;animation:flIn .7s cubic-bezier(.2,.9,.3,1.2) .1s forwards,flick 1.4s ease-in-out .8s infinite}
+#splash .fi{fill:var(--warm);opacity:0;animation:flIn .6s cubic-bezier(.2,.9,.3,1.2) .35s forwards,flick 1.1s ease-in-out .95s infinite reverse}
+#splash .nm{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0;opacity:0;transform:translateY(8px);animation:nmIn .6s ease .7s forwards}
+#splash .glow{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,var(--hot) 0%,transparent 68%);opacity:0;animation:glow 1.6s ease .2s forwards;pointer-events:none}
+.sp-wrap{position:relative;display:grid;place-items:center}
+@keyframes flIn{from{opacity:0;transform:scale(.2) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes flick{0%,100%{transform:scale(1,1) rotate(0)}30%{transform:scale(.97,1.06) rotate(-1.5deg)}60%{transform:scale(1.02,.97) rotate(1deg)}}
+@keyframes nmIn{to{opacity:1;transform:none}}
+@keyframes glow{0%{opacity:0;transform:scale(.5)}60%{opacity:.16}100%{opacity:.08;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){#splash .fo,#splash .fi,#splash .nm,#splash .glow{animation:none;opacity:1;transform:none}#splash .glow{opacity:.08}}
+#splash .credit{position:absolute;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;align-items:flex-end;gap:9px;color:var(--muted);font-size:11px;line-height:14px;opacity:0;animation:crIn .8s ease 1.1s forwards}
+#splash .credit .eos{display:flex;flex-direction:column;align-items:center;gap:2px}
+#splash .credit .ini{font-weight:600;letter-spacing:.14em;margin-right:-.14em}
+#splash .credit .gl{width:28px;height:10px;display:block}
+#splash .credit .cl{width:16px;height:16px;display:block;margin-bottom:-1px}
+@keyframes crIn{to{opacity:.6}}
+@media (prefers-reduced-motion:reduce){#splash .credit{animation:none;opacity:.6}}
 </style>
 </head>
 <body>
+<div id="splash" role="presentation" aria-hidden="true">
+  <div class="sp-wrap">
+    <div class="glow"></div>
+    <svg viewBox="0 0 100 100"><path class="fl fo" d="M50,5 C50,25 78,38 78,65 C78,82 65,95 50,95 C35,95 22,82 22,65 C22,50 30,42 36,33 C38,42 42,46 46,46 C44,30 46,15 50,5 Z"/><path class="fl fi" d="M50,50 C50,60 64,66 64,76 C64,86 58,93 50,93 C42,93 36,86 36,76 C36,66 50,60 50,50 Z"/></svg>
+  </div>
+  <p class="nm">El Horno</p>
+  <div class="credit" aria-hidden="true">
+    <span class="by">by</span>
+    <span class="eos"><svg class="gl" viewBox="0 0 40 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="8" r="5"/><circle cx="29.5" cy="8" r="5"/><path d="M15.5 7.2Q20 4.2 24.5 7.2"/><path d="M5.6 7L1.5 5M34.4 7l4.1-2"/></svg><span class="ini">EOS</span></span>
+    <span class="plus">+</span>
+    <svg class="cl" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M19.8 16.0L19.1 2.0"/><path d="M22.2 16.7L26.7 10.1"/><path d="M23.4 17.8L33.4 11.3"/><path d="M24.0 20.3L30.0 20.7"/><path d="M23.6 21.8L35.1 27.7"/><path d="M21.8 23.6L25.7 31.7"/><path d="M20.2 24.0L20.9 38.0"/><path d="M17.8 23.3L13.8 29.1"/><path d="M16.6 22.2L7.4 28.2"/><path d="M16.0 19.7L8.0 19.2"/><path d="M16.4 18.2L4.9 12.3"/><path d="M18.2 16.4L15.6 11.0"/></svg>
+  </div>
+</div>
+<script>setTimeout(function(){var e=document.getElementById('splash');if(e)e.remove()},5000)</script>
 <main>
 <section id="viewList">
-  <h1>El Horno</h1>
   <p class="sub">Qué está caliente y qué se está enfriando por falta de seguimiento.</p>
 
   <div class="bar">
@@ -509,6 +544,13 @@ textarea{resize:vertical;min-height:88px;line-height:1.4}
   });
 
   render();
+  (function(){
+    var sp=$('splash');if(!sp)return;
+    var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+    function hide(){if(sp.dataset.done)return;sp.dataset.done='1';sp.classList.add('out');setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp)},600)}
+    sp.addEventListener('click',hide);
+    setTimeout(hide,rm?900:2300);
+  })();
 })();
   if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){
     window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
